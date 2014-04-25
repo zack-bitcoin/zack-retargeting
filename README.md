@@ -2,7 +2,9 @@ basiccoin retargeting scheme
 
 Abstract.
 Difficulty retargeting schemes allow a DAC (Distributed Autonomous Corporation) to maintain consistent blocktimes, even if the mining power changes over time. In this paper we propose a scheme with these properties:
+
 1) recovers from a 90% loss of mining power within 10 blocks.
+
 2) Holding mining power constant, oscillations in difficulty due to random chance stay within 5% of average difficulty.
 
 1. Introduction
@@ -15,22 +17,21 @@ The target is a 64-digit hexidecimal number which is used to represent how diffi
 (estimate of the target over last 1000 blocks)*(estimate of blocktime for last 1000 blocks)/(correct blocktime)
 
 4. Geometric series 
-examples: 0.5 0.25 0.125 0.0625 0.03125 ...
-0.9 0.81 0.729 0.6561 ...
-let w=0.985
-The geomtric series we use in this paper:
-1, w, w^2, w^3, w^4... w^1000
-
-This series is used because the first 50 numbers summed together are as big as the rest of the numbers together:
-1+w+w^2+...+w^50=w^51+w^52+...+w^998+w^999+w^1000
-let total_weight=1+w+w^2+...+w^999+w^1000
+   examples: 0.5 0.25 0.125 0.0625 0.03125 ...
+   0.9 0.81 0.729 0.6561 ...
+   let w=0.985
+   The geomtric series we use in this paper:
+   1, w, w^2, w^3, w^4... w^1000
+   This series is used because the first 50 numbers summed together are as big as the rest of the numbers together:
+   1+w+w^2+...+w^50=w^51+w^52+...+w^998+w^999+w^1000
+   let total_weight=1+w+w^2+...+w^999+w^1000
 
 5. How to estimate blocktime
-let w(i)=weights, so w(0)=1, w(1)=0.98...
-let b(i)=blocktime of block number i, so b(0) is how long the first block too to mine, etc.
-estimated_blocktime= sum from i=0 to i=1000 w(i)*b(i)/total_weight
+   let w(i)=weights, so w(0)=1, w(1)=0.98...
+   let b(i)=blocktime of block number i, so b(0) is how long the first block too to mine, etc.
+   estimated_blocktime= sum from i=0 to i=1000 w(i)*b(i)/total_weight
 
 6. How to estimate difficulty
-let w(i)=weights, so w(0)=1, w(1)=0.98...
-let t(i)=target of block number i, so t(0) is target of first block, etc.
-1/estimated_target= sum from i=0 to i=1000 w(i)/t(i)/total_weight
+   let w(i)=weights, so w(0)=1, w(1)=0.98...
+   let t(i)=target of block number i, so t(0) is target of first block, etc.
+   1/estimated_target= sum from i=0 to i=1000 w(i)/t(i)/total_weight
